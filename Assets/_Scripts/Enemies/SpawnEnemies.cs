@@ -23,6 +23,8 @@ public class SpawnEnemies : MonoBehaviour
     {
         if (gm.gameState != GameManager.GameState.GAME) return;
 
+        nEnemies = GameObject.FindGameObjectsWithTag("asteroid").Length + GameObject.FindGameObjectsWithTag("enemies").Length;
+
         GameObject player = GameObject.FindWithTag("player");
 
         if (player)
@@ -40,7 +42,7 @@ public class SpawnEnemies : MonoBehaviour
             {
                 float randomValue = Random.Range(0.0f, 1.0f);
 
-                if (randomValue > 0.7)
+                if (randomValue > 0.6)
                 {
                     Instantiate(asteroid, spawnPos, playerRot);
                     timer = Time.time + 2;
@@ -50,7 +52,6 @@ public class SpawnEnemies : MonoBehaviour
                     Instantiate(enemyShip, spawnPos, playerRot);
                     timer = Time.time + 1;
                 }
-                nEnemies += 1;
             }
         }
     }
