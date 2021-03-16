@@ -6,6 +6,7 @@ public class AttackingState : State
 {
     SteerableBehaviour steerable;
     IShooter shooter;
+    GameManager gm;
 
     public override void Awake()
     {
@@ -22,9 +23,11 @@ public class AttackingState : State
         {
             throw new MissingComponentException("This GameObject does not implement IShooter");
         }
+
+        gm = GameManager.GetInstance();
     }
 
-    private float shootDelay = 0.5f;
+    private float shootDelay = 1.0f;
     private float _lastShootTimestamp = 0.0f;
     public override void Update()
     {

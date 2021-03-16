@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerController : SteerableBehaviour, IShooter, IDamageable
 {
     Animator animator;
-    private int health;
+    GameManager gm;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        health = 20;
+        gm = GameManager.GetInstance();
     }
 
     public GameObject bullet;
@@ -30,14 +30,13 @@ public class PlayerController : SteerableBehaviour, IShooter, IDamageable
 
     public void TakeDamage(int dmg)
     {
-        health -= dmg;
-        Debug.Log("Current health: " + health);
-        if (health <= 0) Die();
+        gm.playerHealth -= dmg;
+        if (gm.playerHealth <= 0) Die();
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        if (gm.gameState == GameManager.GameState.GAME) gm.ChangeState(GameManager.GameState.ENDGAME);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -57,20 +56,25 @@ public class PlayerController : SteerableBehaviour, IShooter, IDamageable
 
     void FixedUpdate()
     {
-        float yInput = Input.GetAxis("Vertical");
-        float xInput = Input.GetAxis("Horizontal");
-        Thrust(xInput, yInput);
-        if (yInput != 0 || xInput != 0)
-        {
-            animator.SetFloat("Velocity", 1.0f);
-        }
+        if (gm.gameState != GameManager.GameState.GAME) return;
         else
         {
-            animator.SetFloat("Velocity", 0.0f);
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Shoot();
+            float yInput = Input.GetAxis("Vertical");
+            float xInput = Input.GetAxis("Horizontal");
+            Thrust(xInput, yInput);
+
+            if (yInput != 0 || xInput != 0)
+            {
+                animator.SetFloat("Velocity", 1.0f);
+            }
+            else
+            {
+                animator.SetFloat("Velocity", 0.0f);
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Shoot();
+            }
         }
     }
 }

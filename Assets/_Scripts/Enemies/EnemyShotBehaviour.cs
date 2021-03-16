@@ -8,9 +8,9 @@ public class EnemyShotBehaviour : SteerableBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("asteroid") || collision.CompareTag("enemies")) return;
+        if (collision.CompareTag("asteroid") || collision.CompareTag("enemies") || collision.CompareTag("shot")) return;
 
-        IDamageable damageable = collision.gameObject.GetComponent(typeof(IDamageable)) as IDamageable;
+        IDamageable damageable = (IDamageable)collision.gameObject.GetComponent(typeof(IDamageable));
         if (!(damageable is null))
         {
             damageable.TakeDamage(1);
@@ -20,17 +20,18 @@ public class EnemyShotBehaviour : SteerableBehaviour
 
     void Start()
     {
+        Vector3 posPlayer = GameObject.FindWithTag("player").transform.position;
+        direction = (posPlayer - transform.position).normalized;
     }
 
     void Update()
     {
-        Vector3 posPlayer = GameObject.FindWithTag("player").transform.position;
-        direction = (posPlayer - transform.position).normalized;
         Thrust(direction.x, direction.y);
     }
 
     private void OnBecameInvisible()
     {
         gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

@@ -201,9 +201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   td: {fileID: 11400000, guid: 3d629291c5de76e40ba1a8d8cb9a9990, type: 2}
-  bullet: {fileID: 6214505252829234599, guid: e544762888bbb754686d0526f8c52271, type: 3}
+  bullet: {fileID: 6082953007962314316, guid: 65636e79e70df044b94e9234d3ffa700, type: 3}
   enemyGun: {fileID: 6615833911126354965}
-  shootSFX: {fileID: 0}
+  shootSFX: {fileID: 8300000, guid: 13636fe6a9b394943b1523cdee3f2931, type: 3}
 --- !u!114 &6615833909713497280
 MonoBehaviour:
   m_ObjectHideFlags: 0
