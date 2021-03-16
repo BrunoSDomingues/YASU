@@ -17,7 +17,7 @@ public class UI_GameOver : MonoBehaviour
         {
             message.text = "You scored " + gm.points + " points!";
         }
-        else if (gm.points >= 10000)
+        else if (gm.points >= 5000)
         {
             message.text = "YOU WIN!";
         }
